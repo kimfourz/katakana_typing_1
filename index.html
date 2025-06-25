@@ -140,7 +140,7 @@
     if (currentStage === 1) {
       words = katakana;
     } else {
-      shuffle(fullWords);
+      shuffle(fullWords); // 2단계: 단어 배열
       words = fullWords.slice(0, 10); // 10개 단어만 사용
     }
     current = 0;
@@ -158,9 +158,15 @@
       return;
     }
 
+    // 랜덤 인덱스 선택
+    const randomIndex = Math.floor(Math.random() * words.length);
+    const randomWord = words[randomIndex];
+    words.splice(randomIndex, 1); // 이미 선택된 단어는 배열에서 삭제
+
     document.getElementById('input').value = '';
     document.getElementById('feedback').innerText = '';
-    document.getElementById('question').innerText = words[current];
+    document.getElementById('question').innerText = randomWord;
+    
     time = 15;
     answered = false;
     updateTimer();
@@ -188,7 +194,9 @@
 
   function checkInput() {
     const input = document.getElementById('input').value;
-    if (!answered && input === words[current]) {
+    const currentWord = document.getElementById('question').innerText;
+
+    if (!answered && input === currentWord) {
       answered = true;
       clearInterval(timerInterval);
       document.getElementById('feedback').innerText = '⭕ 정답!';
@@ -203,9 +211,9 @@
   }
 
   function markWrong(message) {
-    document.getElementById('feedback').innerText = `${message} 정답: ${words[current]}`;
+    document.getElementById('feedback').innerText = `${message} 정답: ${document.getElementById('question').innerText}`;
     incorrect++;
-    wrongList.push(words[current]);
+    wrongList.push(document.getElementById('question').innerText);
     current++;
     setTimeout(nextQuestion, 1500);
   }
