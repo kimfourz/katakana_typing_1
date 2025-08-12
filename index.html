@@ -134,38 +134,59 @@
     }
   }
 
-  const stages = {
-  1: () => katakana, 
-  2: () => {
-    shuffle(fullWords);
-    return fullWords.slice(0, 10);
-  },
-  3: () => {
-    shuffle(fullWords);
-    return fullWords.slice(0, 20); // 예: 20개 단어 사용
+<script>
+  const katakana = [...]; // 기존 데이터 그대로
+  const fullWords = [...]; // 기존 데이터 그대로
+
+  let currentStage = 1;
+  let words = [];
+  let current = 0;
+  let correct = 0;
+  let incorrect = 0;
+  let wrongList = []; // <-- 여기서 한 번만 선언
+  let time = 15;
+  let timerInterval;
+  let answered = false;
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
-};
+
+  const stages = {
+    1: () => katakana, 
+    2: () => {
+      shuffle(fullWords);
+      return fullWords.slice(0, 10);
+    },
+    3: () => {
+      shuffle(fullWords);
+      return fullWords.slice(0, 20);
+    }
+  };
 
   function startGame(stage) {
-  currentStage = stage; 
-  document.getElementById("stage1Btn").style.display = "none";
-  document.getElementById("stage2Btn").style.display = "none";
+    currentStage = stage; 
+    document.getElementById("stage1Btn").style.display = "none";
+    document.getElementById("stage2Btn").style.display = "none";
 
-  if (stages[stage]) {
-    words = stages[stage]();
-  } else {
-    alert("존재하지 않는 단계입니다!");
-    return;
+    if (stages[stage]) {
+      words = stages[stage]();
+    } else {
+      alert("존재하지 않는 단계입니다!");
+      return;
+    }
+
+    current = 0;
+    correct = 0;
+    incorrect = 0;
+    wrongList = []; // 여기서 초기화만
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    nextQuestion();
   }
-
-  current = 0;
-  correct = 0;
-  incorrect = 0;
-  wrongList = [];
-  document.getElementById('result').style.display = 'none';
-  document.getElementById('game').style.display = 'block';
-  nextQuestion();
-}
 
   function nextQuestion() {
     if (current >= words.length) {
@@ -173,10 +194,9 @@
       return;
     }
 
-    // 랜덤 인덱스 선택
     const randomIndex = Math.floor(Math.random() * words.length);
     const randomWord = words[randomIndex];
-    words.splice(randomIndex, 1); // 이미 선택된 단어는 배열에서 삭제
+    words.splice(randomIndex, 1);
 
     document.getElementById('input').value = '';
     document.getElementById('feedback').innerText = '';
@@ -192,7 +212,7 @@
       updateTimer();
       if (time <= 0) {
         clearInterval(timerInterval);
-        markWrong("⏱️ 시간 초과!");
+        markWrong("⏱️ 시간 초과!", "", randomWord);
       }
     }, 1000);
   }
@@ -207,56 +227,53 @@
     }
   }
 
-let wrongList = []; // { question, answer } 형태로 저장
+  function checkInput() {
+    const input = document.getElementById('input').value;
+    const currentWord = document.getElementById('question').innerText;
 
-function checkInput() {
-  const input = document.getElementById('input').value;
-  const currentWord = document.getElementById('question').innerText;
+    if (!answered && input === currentWord) {
+      answered = true;
+      clearInterval(timerInterval);
+      document.getElementById('feedback').innerText = '⭕ 정답!';
+      correct++;
+      current++;
+      setTimeout(nextQuestion, 1000);
+    } else if (!answered) {
+      answered = true;
+      clearInterval(timerInterval);
+      markWrong("❌ 오답!", input, currentWord);
+    }
+  }
 
-  if (!answered && input === currentWord) {
-    answered = true;
-    clearInterval(timerInterval);
-    document.getElementById('feedback').innerText = '⭕ 정답!';
-    correct++;
+  function markWrong(message, inputValue, currentWord) {
+    document.getElementById('feedback').innerText = `${message} 정답: ${currentWord}`;
+    incorrect++;
+    wrongList.push({ question: currentWord, answer: inputValue || "(미입력)" });
     current++;
-    setTimeout(nextQuestion, 1000);
-  } else if (!answered) {
-    answered = true;
-    clearInterval(timerInterval);
-    markWrong("❌ 오답!", input, currentWord);
-  }
-}
-
-function markWrong(message, inputValue, currentWord) {
-  document.getElementById('feedback').innerText = `${message} 정답: ${currentWord}`;
-  incorrect++;
-  wrongList.push({ question: currentWord, answer: inputValue || "(미입력)" });
-  current++;
-  setTimeout(nextQuestion, 1500);
-}
-
-function endGame() {
-  document.getElementById('game').style.display = 'none';
-
-  let wrongDetails = "";
-  if (wrongList.length) {
-    wrongDetails = "<br>❌ 틀린 문제:<br>";
-    wrongList.forEach((item, idx) => {
-      wrongDetails += `${idx + 1}. 문제: ${item.question} | 입력: ${item.answer}<br>`;
-    });
-  } else {
-    wrongDetails = "<br>모든 문제를 맞췄습니다!";
+    setTimeout(nextQuestion, 1500);
   }
 
-  const resultText = `🎉 게임 종료!<br>
-    ✅ 정답 수: ${correct}<br>
-    ❌ 오답 수: ${incorrect}<br>
-    ${wrongDetails}`;
+  function endGame() {
+    document.getElementById('game').style.display = 'none';
 
-  document.getElementById('resultText').innerHTML = resultText;
-  document.getElementById('result').style.display = 'block';
-}
+    let wrongDetails = "";
+    if (wrongList.length) {
+      wrongDetails = "<br>❌ 틀린 문제:<br>";
+      wrongList.forEach((item, idx) => {
+        wrongDetails += `${idx + 1}. 문제: ${item.question} | 입력: ${item.answer}<br>`;
+      });
+    } else {
+      wrongDetails = "<br>모든 문제를 맞췄습니다!";
+    }
 
+    const resultText = `🎉 게임 종료!<br>
+      ✅ 정답 수: ${correct}<br>
+      ❌ 오답 수: ${incorrect}<br>
+      ${wrongDetails}`;
+
+    document.getElementById('resultText').innerHTML = resultText;
+    document.getElementById('result').style.display = 'block';
+  }
 
   function restartGame() {
     document.getElementById("stage1Btn").style.display = "inline-block";
