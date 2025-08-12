@@ -133,24 +133,38 @@
     }
   }
 
-  function startGame(stage) {
-    currentStage = stage; // 선택된 단계로 설정
-    document.getElementById("stage1Btn").style.display = "none";
-    document.getElementById("stage2Btn").style.display = "none";
-    if (currentStage === 1) {
-      words = katakana;
-    } else {
-      shuffle(fullWords); // 2단계: 단어 배열
-      words = fullWords.slice(0, 10); // 10개 단어만 사용
-    }
-    current = 0;
-    correct = 0;
-    incorrect = 0;
-    wrongList = [];
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
-    nextQuestion();
+  const stages = {
+  1: () => katakana, 
+  2: () => {
+    shuffle(fullWords);
+    return fullWords.slice(0, 10);
+  },
+  3: () => {
+    shuffle(fullWords);
+    return fullWords.slice(0, 20); // 예: 20개 단어 사용
   }
+};
+
+  function startGame(stage) {
+  currentStage = stage; 
+  document.getElementById("stage1Btn").style.display = "none";
+  document.getElementById("stage2Btn").style.display = "none";
+
+  if (stages[stage]) {
+    words = stages[stage]();
+  } else {
+    alert("존재하지 않는 단계입니다!");
+    return;
+  }
+
+  current = 0;
+  correct = 0;
+  incorrect = 0;
+  wrongList = [];
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+  nextQuestion();
+}
 
   function nextQuestion() {
     if (current >= words.length) {
