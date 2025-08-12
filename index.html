@@ -39,18 +39,18 @@
     button {
       font-size: 18px;
       padding: 10px 20px;
-      margin: 5px;
+      margin: 5px 0; /* 위아래만 간격 */
       background-color: #1a73e8;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      width: 200px; /* 버튼 크기 통일 */
     }
     #stageButtons {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 600px;
+      flex-direction: column; /* 세로로 나열 */
+      align-items: center; /* 가운데 정렬 */
     }
     #game {
       margin-top: 40px;
@@ -128,7 +128,7 @@
 
 <div id="result" style="display:none;">
   <div id="resultText"></div>
-  <button onclick="restartGame()" style="margin-top: 20px; padding: 10px 20px; font-size: 18px; background-color: #1a73e8; color: white; border: none; border-radius: 5px;">🔁 다시 시작</button>
+  <button onclick="restartGame()">🔁 다시 시작</button>
 </div>
 
 <script>
