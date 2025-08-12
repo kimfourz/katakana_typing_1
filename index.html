@@ -39,12 +39,18 @@
     button {
       font-size: 18px;
       padding: 10px 20px;
-      margin-top: 20px;
+      margin: 5px;
       background-color: #1a73e8;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+    }
+    #stageButtons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 600px;
     }
     #game {
       margin-top: 40px;
@@ -53,6 +59,17 @@
     #question {
       font-size: 48px;
       margin: 20px;
+    }
+    #question .kana {
+      font-size: 56px;
+      font-weight: bold;
+      display: block;
+    }
+    #question .romaji {
+      font-size: 24px;
+      color: gray;
+      margin-top: 5px;
+      display: block;
     }
     #input {
       font-size: 24px;
@@ -95,13 +112,12 @@
 
 <!-- 옵션 -->
 <div class="options">
-  라운드 수: <input type="number" id="roundCount" value="10" min="1" max="50"> 개
+  라운드 수: <input type="number" id="roundCount" value="10" min="1" max="40"> 개
   &nbsp;&nbsp; 제한 시간: <input type="number" id="timeLimit" value="15" min="5" max="60"> 초
 </div>
 
 <!-- 단계 선택 버튼 -->
-<button id="stage1Btn" onclick="startGame(1)">▶ 1단계: 가타카나 연습</button>
-<button id="stage2Btn" onclick="startGame(2)">▶ 2단계: 단어 연습</button>
+<div id="stageButtons"></div>
 
 <div id="game" style="display:none;">
   <div id="timer">15</div>
@@ -116,11 +132,16 @@
 </div>
 
 <script>
-  const katakana = ["カ","キ","ク","ケ","コ","サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ","ワ","ヲ","ン"];
-  const fullWords = ["アイスクリーム","アイデア","アイロン","アウト","アクセサリー","アクセント","アジア","アドバイス","アドレス","アナウンサー","アナウンス","アニメ","アパート","アフリカ","アマチュア","アメリカ","アルコール","アルバイト","アルバム","アルミホイル","アレルギー","アンケート","アンテナ","イコール","イセビョル","イミンジ","イムスジョン","イムミンジン","イメージ","イヤリング","イユビン","イヨジン","インキ","インク","インスタント","インタビュー","インターネット","ウイスキー","ウイルス","ウエートレス","ウーマン","ウール","エアコン","エスカレーター","エチケット","エネルギー","エプロン","エレベーター","エンジン","オイル","オフィス","オペラ","オリンピック","オルガン","オーケストラ","オートバイ","オートメーション","オーバー","オーバーコート","カセット","カタログ","カップ","カバー","カメラ","カラー","カレンダー","カレー","カロリー","カンヘジン","カンミンギュ","カー","カーテン","カード","カーナビ","カーブ","カーペット","ガス","ガスだい","ガソリン","ガソリンスタンド","ガム","ガラス","キッチン","キムセジン","キムソクチン","キムドンウ","キムハジュン","キムハヨン","キムミヌ","キャプテン","キャンセル","キャンパス","キャンプ","キロ","キログラム","キロメートル","ギター","ギャング","クイズ","クォンジノ","クソヨン","クラシック","クラス","クラスメート","クラブ","クリスマス","クリック","クリーニング","クリーム","クーラー","グラス","グラム","グループ","ケーキ","ケース","ゲーム","コック","コップ","コピー","コミュニケーション","コレクション","コンクリート","コンクール","コンサート","コンセント","コンビニ","コンピューター","コース","コーチ","コート","コード","コーヒー","コーラス","コール","ゴム","ゴール","サイズ","サイレン","サイン","サッカー","サボ-る","サラダ","サラリーマン","サンダル","サンドイッチ","サンプル","サークル","サービス","シャッター","シャツ","シャワー","ショップ","シリーズ","シンジウ","シンボラ","シーズン","シーツ","ジェットき","ジャム","ジャーナリスト","ジュース","ジョギング","ジーンズ","スイッチ","スカート","スカーフ","スキー","スクリーン","スクール","スケジュール","スケート","スタイル","スタンド","スター","スタート","スチュワーデス","ステレオ","ステーキ","ステージ","ストッキング","ストップ","ストレス","ストーブ","ストーリー","スピーカー","スピーチ","スピード","スプーン","スポンサー","スポーツ","スライド","スリッパ","スーツ","スーツケース","スーパー","スープ","ズボン","セット","セメント","センター","センチ","セーター","セール","ゼミ","ゼロ","ソイェジ","ソジュウォン","ソファー","ソフト","ソンジュンホ","ソンヘジュン","ソース","タイア","タイプ","タイプライター","タイヤ","タオル","タクシー","タバコ","ダイエット","ダイヤ","ダイヤグラム","ダイヤモンド","ダイヤル","ダム","ダンス","チェソンジュン","チェック","チェハリム","チェユナ","チケット","チップ","チャンイェジン","チャンス","チョガンフン","チョジヘ","チョセヨン","チョンアヨン","チョンソウン","チョンダビン","チョーク","チーズ","チーム","テキスト","テスト","テニス","テニスコート","テレビ","テント","テンポ","テーブル","テープ","テープレコーダー","テーマ","デザート","デパート","デモ","データ","デート","トイレ","トップ","トラック","トランプ","トレーニング","トン","トンネル","ドア","ドライブ","ドライヤー","ドラマ","ドレス","ナイフ","ナイロン","ナヘミン","ナンバー","ニュース","ネクタイ","ネックレス","ネット","ノジフン","ノック","ノミンソク","ノー","ノート","ハイキング","ハジュノ","ハンカチ","ハンスヒョン","ハンダユン","ハンドバッグ","ハンドル","ハンバーグ","ハート","バイオリン","バイク","バイト","バイバイ","バケツ","バス","バスてい","バター","バック","バッグ","バランス","バン","バンド","パイプ","パイロット","パクジフン","パクジョンア","パクテフン","パクヒョンジュン","パス","パスポート","パソコン","パターン","パン","パンや","パンツ","パージ","パーセント","パーティー","パートタイム","ビタミン","ビデオ","ビニール","ビル","ビルディング","ビール","ピアノ","ピクニック","ピストル","ピン","ピンク","ピンポン","ファイル","ファスナー","ファックス","ファンイェソル","ファンユンホ","ファーストフード","フィルム","フォーク","フライパン","フリー","フルーツ","ブラウス","ブラシ","ブレーキ","ブローチ","ブーム","プラス","プラスチック","プラン","プリント","プレゼント","プロ","プログラム","プール","ヘリコプター","ベッド","ベテラン","ベル","ベルト","ベンチ","ペジフン","ペット","ペミンチョル","ペン","ペンキ","ペンチ","ページ","ホテル","ホーム","ホームページ","ボタン","ボーイ","ボート","ボーナス","ボール","ボールペン","ポケット","ポスター","ポスト","マイク","マイナス","マイペース","マスク","マスター","マッチ","マフラー","ママ","マラソン","マンション","マーケット","ミシン","ミス","ミリ","ミルク","ムンジス","メニュー","メモ","メリット","メロン","メンバー","メーター","メートル","モダン","モデル","モノレール","モーター","ユアイン","ユンサンウク","ユンミソ","ユーモア","ヨット","ヨーロッパ","ライオン","ライター","ライト","ラケット","ラジオ","ラジカセ","ラッシュアワー","ランチ","ランニング","リサイクル","リズム","リットル","リハーサル","リボン","リポート","リーダー","レインコート","レクリエーション","レコード","レジ","レジャー","レストラン","レベル","レポーター","レポート","レンズ","レンタル","ロケット","ロッカー","ロビー","ロボット","ローマじ","ワイシャツ","ワイン","ワンピース","ワープロ"];
+  const katakana = ["カ","キ","ク","ケ","コ","サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ"];
+  const halfKatakanapractice = [
+    "シュ SHU","ショ SHO","ジュ JU","ジョ JO","チュ CHU","チョ CHO","ニュ NYU","ニョ NYO","ヒュ HYU","ヒョ HYO","ミュ MYU","ミョ MYO","リュ RYU","リョ RYO","クァ KWA","クィ KWI","クェ KWE","クォ KWO"
+  ];
+  const halfKatakana = ["シュ","ショ","ジュ","ジョ","チュ","チョ","ニュ","ニョ","ヒュ","ヒョ","ミュ","ミョ","リュ","リョ","クァ","クィ","クェ","クォ"];
+  const fullWords = ["アイスクリーム","アイデア","アイロン","アウト","アクセサリー","アクセント","アジア","アドバイス","アドレス","アナウンサー","アナウンス","アニメ","アパート","アフリカ","アマチュア","アメリカ"];
 
   let currentStage = 1;
   let words = [];
+  let displayWords = [];
   let current = 0;
   let correct = 0;
   let incorrect = 0;
@@ -138,8 +159,20 @@
   }
 
   const stages = {
-    1: () => katakana,
-    2: () => fullWords
+    1: { name: "1단계: 가타카나 연습", getWords: () => katakana, isPractice: false },
+    2: { name: "2단계: 요음 연습", getWords: () => halfKatakanapractice, isPractice: true },
+    3: { name: "3단계: 요음 테스트", getWords: () => halfKatakana, isPractice: false },
+    4: { name: "4단계: 단어 테스트", getWords: () => fullWords, isPractice: false }
+  };
+
+  window.onload = function() {
+    const btnContainer = document.getElementById("stageButtons");
+    for (let key in stages) {
+      const btn = document.createElement("button");
+      btn.textContent = `▶ ${stages[key].name}`;
+      btn.onclick = () => startGame(parseInt(key));
+      btnContainer.appendChild(btn);
+    }
   };
 
   function startGame(stage) {
@@ -147,13 +180,18 @@
     timeLimit = parseInt(document.getElementById("timeLimit").value, 10) || 15;
 
     currentStage = stage;
-    document.getElementById("stage1Btn").style.display = "none";
-    document.getElementById("stage2Btn").style.display = "none";
+    document.getElementById("stageButtons").style.display = "none";
 
     if (stages[stage]) {
-      let stageWords = stages[stage]();
+      let stageWords = stages[stage].getWords().slice();
       shuffle(stageWords);
-      words = stageWords.slice(0, roundCount);
+      displayWords = stageWords.slice(0, roundCount);
+
+      if (stages[stage].isPractice) {
+        words = displayWords.map(w => w.split(" ")[0]);
+      } else {
+        words = displayWords;
+      }
     } else {
       alert("존재하지 않는 단계입니다!");
       return;
@@ -169,15 +207,20 @@
   }
 
   function nextQuestion() {
-    if (current >= roundCount) {
+    if (current >= words.length) {
       endGame();
       return;
     }
 
-    const currentWord = words[current];
     document.getElementById('input').value = '';
     document.getElementById('feedback').innerText = '';
-    document.getElementById('question').innerText = currentWord;
+
+    if (stages[currentStage].isPractice) {
+      const [kana, romaji] = displayWords[current].split(" ");
+      document.getElementById('question').innerHTML = `<span class="kana">${kana}</span><span class="romaji">${romaji}</span>`;
+    } else {
+      document.getElementById('question').innerText = displayWords[current];
+    }
 
     let timeLeft = timeLimit;
     answered = false;
@@ -189,7 +232,7 @@
       updateTimer(timeLeft);
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        markWrong("⏱️ 시간 초과!", "", currentWord);
+        markWrong("⏱️ 시간 초과!", "", words[current]);
       }
     }, 1000);
   }
@@ -205,10 +248,8 @@
   }
 
   function checkInput() {
-    const input = document.getElementById('input').value;
-    const currentWord = document.getElementById('question').innerText;
-
-    if (!answered && input === currentWord) {
+    const input = document.getElementById('input').value.trim();
+    if (!answered && input === words[current]) {
       answered = true;
       clearInterval(timerInterval);
       document.getElementById('feedback').innerText = '⭕ 정답!';
@@ -218,14 +259,14 @@
     } else if (!answered) {
       answered = true;
       clearInterval(timerInterval);
-      markWrong("❌ 오답!", input, currentWord);
+      markWrong("❌ 오답!", input, words[current]);
     }
   }
 
-  function markWrong(message, inputValue, currentWord) {
-    document.getElementById('feedback').innerText = `${message} 정답: ${currentWord}`;
+  function markWrong(message, inputValue, correctAnswer) {
+    document.getElementById('feedback').innerText = `${message} 정답: ${correctAnswer}`;
     incorrect++;
-    wrongList.push({ question: currentWord, answer: inputValue || "(미입력)" });
+    wrongList.push({ question: correctAnswer, answer: inputValue || "(미입력)" });
     current++;
     setTimeout(nextQuestion, 1500);
   }
@@ -253,8 +294,7 @@
   }
 
   function restartGame() {
-    document.getElementById("stage1Btn").style.display = "inline-block";
-    document.getElementById("stage2Btn").style.display = "inline-block";
+    document.getElementById("stageButtons").style.display = "flex";
     document.getElementById('result').style.display = 'none';
   }
 </script>
