@@ -36,17 +36,18 @@
       font-size: 32px;
       color: #1a73e8;
     }
-    button {
+    #stageButtons button {
       font-size: 18px;
       padding: 10px 20px;
-      margin: 5px 0; /* 위아래만 간격 */
       background-color: #1a73e8;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      width: 200px; /* 버튼 크기 통일 */
+      width: auto; /* 폭 자동 */
+      white-space: nowrap; /* 줄바꿈 방지 */
     }
+
     #stageButtons {
       display: flex;
       flex-direction: column; /* 세로로 나열 */
