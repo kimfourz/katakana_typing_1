@@ -4,39 +4,44 @@
   <meta charset="UTF-8">
   <title>カタカナ 컨닝페이퍼</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #1a73e8;
-    }
-    h2 {
-      margin-top: 40px;
-      color: #444;
-    }
-    table {
-      border-collapse: collapse;
-      margin: 0 auto 20px auto;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      text-align: center;
-    }
-    th {
-      background-color: #f0f0f0;
-    }
-    .kana-cell {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .romaji {
-      font-size: 14px;
-      color: gray;
-    }
-  </style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #1a73e8;
+  }
+  h2 {
+    margin-top: 40px;
+    color: #444;
+  }
+  table {
+    border-collapse: collapse;
+    margin: 0 auto 20px auto;
+  }
+  th, td {
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  th {
+    background-color: #f0f0f0;
+  }
+
+  .kana-cell {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 16px 12px;
+    min-width: 80px; /* 외래어 확장 기준 */
+  }
+
+  .romaji {
+    font-size: 14px;
+    color: gray;
+    display: block;
+  }
+</style>
+
 </head>
 <body>
 
