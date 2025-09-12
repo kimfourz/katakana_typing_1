@@ -28,6 +28,10 @@
     th {
       background-color: #f0f0f0;
     }
+    .kana-cell {
+      font-size: 24px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -97,7 +101,7 @@
     const trKana = document.createElement('tr');
     const trRomaji = document.createElement('tr');
     row.forEach(([kana, roma]) => {
-      trKana.innerHTML += `<td>${kana}</td>`;
+      trKana.innerHTML += `<td class="kana-cell">${kana}</td>`;
     });
     row.forEach(([kana, roma]) => {
       trRomaji.innerHTML += `<td>${roma}</td>`;
@@ -122,7 +126,7 @@
   ];
   const tbodyYouon = document.getElementById('table-youon');
   youon.forEach(([kana, roma]) => {
-    tbodyYouon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+    tbodyYouon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
   });
 
   // 3. 탁음
@@ -134,7 +138,7 @@
   ];
   const tbodyDakuon = document.getElementById('table-dakuon');
   dakuon.forEach(([kana, roma]) => {
-    tbodyDakuon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+    tbodyDakuon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
   });
 
   // 4. 반탁음
@@ -143,7 +147,7 @@
   ];
   const tbodyHandakuon = document.getElementById('table-handakuon');
   handakuon.forEach(([kana, roma]) => {
-    tbodyHandakuon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+    tbodyHandakuon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
   });
 
   // 5. 외래어 확장 요음
@@ -156,7 +160,7 @@
   ];
   const tbodyGairaigo = document.getElementById('table-gairaigo');
   gairaigo.forEach(([kana, roma]) => {
-    tbodyGairaigo.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+    tbodyGairaigo.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
   });
 </script>
 
