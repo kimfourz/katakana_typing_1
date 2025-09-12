@@ -32,137 +32,48 @@
       font-size: 24px;
       font-weight: bold;
     }
+    .romaji {
+      font-size: 14px;
+      color: gray;
+    }
   </style>
 </head>
 <body>
 
 <h1>📖 カタカナ컨닝페이퍼</h1>
 
-<!-- 1. 50음도 -->
-<h2>▶ 기본 카타카나 50음도</h2>
-<table>
-  <thead>
-    <tr>
-      <th>ア</th><th>カ</th><th>サ</th><th>タ</th><th>ナ</th>
-      <th>ハ</th><th>マ</th><th>ヤ</th><th>ラ</th><th>ワ</th>
-    </tr>
-  </thead>
-  <tbody id="table-50on"></tbody>
-</table>
-
-<!-- 2. 요음 -->
+<!-- 요음 -->
 <h2>▶ 요음 (拗音)</h2>
 <table>
-  <thead>
-    <tr><th>카타카나</th><th>로마자</th></tr>
-  </thead>
-  <tbody id="table-youon"></tbody>
-</table>
+  <tbody>
+<tr><td class="kana-cell">キャ<br><span class="romaji">kya</span></td><td class="kana-cell">キュ<br><span class="romaji">kyu</span></td><td class="kana-cell">キョ<br><span class="romaji">kyo</span></td><td class="kana-cell">シャ<br><span class="romaji">sha</span></td><td class="kana-cell">シュ<br><span class="romaji">shu</span></td><td class="kana-cell">ショ<br><span class="romaji">sho</span></td><td class="kana-cell">チャ<br><span class="romaji">cha</span></td><td class="kana-cell">チュ<br><span class="romaji">chu</span></td><td class="kana-cell">チョ<br><span class="romaji">cho</span></td><td class="kana-cell">ニャ<br><span class="romaji">nya</span></td><td class="kana-cell">ニュ<br><span class="romaji">nyu</span></td></tr>
+<tr><td class="kana-cell">ニョ<br><span class="romaji">nyo</span></td><td class="kana-cell">ヒャ<br><span class="romaji">hya</span></td><td class="kana-cell">ヒュ<br><span class="romaji">hyu</span></td><td class="kana-cell">ヒョ<br><span class="romaji">hyo</span></td><td class="kana-cell">ミャ<br><span class="romaji">mya</span></td><td class="kana-cell">ミュ<br><span class="romaji">myu</span></td><td class="kana-cell">ミョ<br><span class="romaji">myo</span></td><td class="kana-cell">リャ<br><span class="romaji">rya</span></td><td class="kana-cell">リュ<br><span class="romaji">ryu</span></td><td class="kana-cell">リョ<br><span class="romaji">ryo</span></td><td class="kana-cell">ギャ<br><span class="romaji">gya</span></td></tr>
+<tr><td class="kana-cell">ギュ<br><span class="romaji">gyu</span></td><td class="kana-cell">ギョ<br><span class="romaji">gyo</span></td><td class="kana-cell">ジャ<br><span class="romaji">ja</span></td><td class="kana-cell">ジュ<br><span class="romaji">ju</span></td><td class="kana-cell">ジョ<br><span class="romaji">jo</span></td><td class="kana-cell">ビャ<br><span class="romaji">bya</span></td><td class="kana-cell">ビュ<br><span class="romaji">byu</span></td><td class="kana-cell">ビョ<br><span class="romaji">byo</span></td><td class="kana-cell">ピャ<br><span class="romaji">pya</span></td><td class="kana-cell">ピュ<br><span class="romaji">pyu</span></td><td class="kana-cell">ピョ<br><span class="romaji">pyo</span></td></tr>
+</tbody></table>
 
-<!-- 3. 탁음 -->
+<!-- 탁음 -->
 <h2>▶ 탁음 (濁音)</h2>
-<table>
-  <thead>
-    <tr><th>카타카나</th><th>로마자</th></tr>
-  </thead>
-  <tbody id="table-dakuon"></tbody>
-</table>
+<table><tbody>
+<tr><td class="kana-cell">ガ<br><span class="romaji">ga</span></td><td class="kana-cell">ギ<br><span class="romaji">gi</span></td><td class="kana-cell">グ<br><span class="romaji">gu</span></td><td class="kana-cell">ゲ<br><span class="romaji">ge</span></td></tr>
+<tr><td class="kana-cell">ゴ<br><span class="romaji">go</span></td><td class="kana-cell">ザ<br><span class="romaji">za</span></td><td class="kana-cell">ジ<br><span class="romaji">ji</span></td><td class="kana-cell">ズ<br><span class="romaji">zu</span></td></tr>
+<tr><td class="kana-cell">ゼ<br><span class="romaji">ze</span></td><td class="kana-cell">ゾ<br><span class="romaji">zo</span></td><td class="kana-cell">ダ<br><span class="romaji">da</span></td><td class="kana-cell">ヂ<br><span class="romaji">ji</span></td></tr>
+<tr><td class="kana-cell">ヅ<br><span class="romaji">zu</span></td><td class="kana-cell">デ<br><span class="romaji">de</span></td><td class="kana-cell">ド<br><span class="romaji">do</span></td><td class="kana-cell">バ<br><span class="romaji">ba</span></td></tr>
+<tr><td class="kana-cell">ビ<br><span class="romaji">bi</span></td><td class="kana-cell">ブ<br><span class="romaji">bu</span></td><td class="kana-cell">ベ<br><span class="romaji">be</span></td><td class="kana-cell">ボ<br><span class="romaji">bo</span></td></tr>
+</tbody></table>
 
-<!-- 4. 반탁음 (半濁音) -->
+<!-- 반탁음 -->
 <h2>▶ 반탁음 (半濁音)</h2>
-<table>
-  <thead>
-    <tr><th>카타카나</th><th>로마자</th></tr>
-  </thead>
-  <tbody id="table-handakuon"></tbody>
-</table>
+<table><tbody>
+<tr><td class="kana-cell">パ<br><span class="romaji">pa</span></td><td class="kana-cell">ピ<br><span class="romaji">pi</span></td><td class="kana-cell">プ<br><span class="romaji">pu</span></td><td class="kana-cell">ペ<br><span class="romaji">pe</span></td><td class="kana-cell">ポ<br><span class="romaji">po</span></td></tr>
+</tbody></table>
 
-<!-- 5. 외래어 확장 요음 -->
+<!-- 외래어 확장 요음 -->
 <h2>▶ 외래어 확장 요음</h2>
-<table>
-  <thead>
-    <tr><th>카타카나</th><th>로마자</th></tr>
-  </thead>
-  <tbody id="table-gairaigo"></tbody>
-</table>
-
-<script>
-  // 1. 50음도
-  const table50on = [
-    [["ア","a"], ["カ","ka"], ["サ","sa"], ["タ","ta"], ["ナ","na"], ["ハ","ha"], ["マ","ma"], ["ヤ","ya"], ["ラ","ra"], ["ワ","wa"]],
-    [["イ","i"], ["キ","ki"], ["シ","shi"], ["チ","chi"], ["ニ","ni"], ["ヒ","hi"], ["ミ","mi"], ["",""], ["リ","ri"], ["",""]],
-    [["ウ","u"], ["ク","ku"], ["ス","su"], ["ツ","tsu"], ["ヌ","nu"], ["フ","fu"], ["ム","mu"], ["ユ","yu"], ["ル","ru"], ["",""]],
-    [["エ","e"], ["ケ","ke"], ["セ","se"], ["テ","te"], ["ネ","ne"], ["ヘ","he"], ["メ","me"], ["",""], ["レ","re"], ["",""]],
-    [["オ","o"], ["コ","ko"], ["ソ","so"], ["ト","to"], ["ノ","no"], ["ホ","ho"], ["モ","mo"], ["ヨ","yo"], ["ロ","ro"], ["ン","n"]]
-  ];
-
-  const tbody50 = document.getElementById('table-50on');
-  table50on.forEach(row => {
-    const trKana = document.createElement('tr');
-    const trRomaji = document.createElement('tr');
-    row.forEach(([kana, roma]) => {
-      trKana.innerHTML += `<td class="kana-cell">${kana}</td>`;
-    });
-    row.forEach(([kana, roma]) => {
-      trRomaji.innerHTML += `<td>${roma}</td>`;
-    });
-    tbody50.appendChild(trKana);
-    tbody50.appendChild(trRomaji);
-  });
-
-  // 2. 요음
-  const youon = [
-    ["キャ", "kya"], ["キュ", "kyu"], ["キョ", "kyo"],
-    ["シャ", "sha"], ["シュ", "shu"], ["ショ", "sho"],
-    ["チャ", "cha"], ["チュ", "chu"], ["チョ", "cho"],
-    ["ニャ", "nya"], ["ニュ", "nyu"], ["ニョ", "nyo"],
-    ["ヒャ", "hya"], ["ヒュ", "hyu"], ["ヒョ", "hyo"],
-    ["ミャ", "mya"], ["ミュ", "myu"], ["ミョ", "myo"],
-    ["リャ", "rya"], ["リュ", "ryu"], ["リョ", "ryo"],
-    ["ギャ", "gya"], ["ギュ", "gyu"], ["ギョ", "gyo"],
-    ["ジャ", "ja"], ["ジュ", "ju"], ["ジョ", "jo"],
-    ["ビャ", "bya"], ["ビュ", "byu"], ["ビョ", "byo"],
-    ["ピャ", "pya"], ["ピュ", "pyu"], ["ピョ", "pyo"]
-  ];
-  const tbodyYouon = document.getElementById('table-youon');
-  youon.forEach(([kana, roma]) => {
-    tbodyYouon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
-  });
-
-  // 3. 탁음
-  const dakuon = [
-    ["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"],
-    ["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"],
-    ["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"],
-    ["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]
-  ];
-  const tbodyDakuon = document.getElementById('table-dakuon');
-  dakuon.forEach(([kana, roma]) => {
-    tbodyDakuon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
-  });
-
-  // 4. 반탁음
-  const handakuon = [
-    ["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]
-  ];
-  const tbodyHandakuon = document.getElementById('table-handakuon');
-  handakuon.forEach(([kana, roma]) => {
-    tbodyHandakuon.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
-  });
-
-  // 5. 외래어 확장 요음
-  const gairaigo = [
-    ["ファ","fa"], ["フィ","fi"], ["フェ","fe"], ["フォ","fo"],
-    ["ティ","ti"], ["ディ","di"], ["ドゥ","du"],
-    ["ウィ","wi"], ["ウェ","we"], ["ウォ","wo"],
-    ["ヴァ","va"], ["ヴィ","vi"], ["ヴ","vu"], ["ヴェ","ve"], ["ヴォ","vo"],
-    ["チェ","che"], ["シェ","she"], ["ジェ","je"]
-  ];
-  const tbodyGairaigo = document.getElementById('table-gairaigo');
-  gairaigo.forEach(([kana, roma]) => {
-    tbodyGairaigo.innerHTML += `<tr><td class="kana-cell">${kana}</td><td>${roma}</td></tr>`;
-  });
-</script>
+<table><tbody>
+<tr><td class="kana-cell">ファ<br><span class="romaji">fa</span></td><td class="kana-cell">フィ<br><span class="romaji">fi</span></td><td class="kana-cell">フェ<br><span class="romaji">fe</span></td><td class="kana-cell">フォ<br><span class="romaji">fo</span></td><td class="kana-cell">ティ<br><span class="romaji">ti</span></td><td class="kana-cell">ディ<br><span class="romaji">di</span></td></tr>
+<tr><td class="kana-cell">ドゥ<br><span class="romaji">du</span></td><td class="kana-cell">ウィ<br><span class="romaji">wi</span></td><td class="kana-cell">ウェ<br><span class="romaji">we</span></td><td class="kana-cell">ウォ<br><span class="romaji">wo</span></td><td class="kana-cell">ヴァ<br><span class="romaji">va</span></td><td class="kana-cell">ヴィ<br><span class="romaji">vi</span></td></tr>
+<tr><td class="kana-cell">ヴ<br><span class="romaji">vu</span></td><td class="kana-cell">ヴェ<br><span class="romaji">ve</span></td><td class="kana-cell">ヴォ<br><span class="romaji">vo</span></td><td class="kana-cell">チェ<br><span class="romaji">che</span></td><td class="kana-cell">シェ<br><span class="romaji">she</span></td><td class="kana-cell">ジェ<br><span class="romaji">je</span></td></tr>
+</tbody></table>
 
 </body>
 </html>
