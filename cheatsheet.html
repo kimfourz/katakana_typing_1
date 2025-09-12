@@ -7,53 +7,109 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       padding: 20px;
-      line-height: 1.6;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px 10px;
-      text-align: center;
     }
     h1 {
       text-align: center;
       color: #1a73e8;
     }
+    h2 {
+      margin-top: 40px;
+      color: #444;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 0 auto 20px auto;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
 
-<h1>📖 カタカナ  컨닝페이퍼</h1>
+<h1>📖 カタカナ & ヨ음 컨닝페이퍼</h1>
 
+<!-- 1. 50음도 -->
+<h2>▶ 기본 카타카나 50음도</h2>
 <table>
   <thead>
-    <tr><th>カタカナ</th><th>로마자</th></tr>
+    <tr>
+      <th>ア</th><th>カ</th><th>サ</th><th>タ</th><th>ナ</th>
+      <th>ハ</th><th>マ</th><th>ヤ</th><th>ラ</th><th>ワ</th>
+      <th>a</th><th>ka</th><th>sa</th><th>ta</th><th>na</th>
+      <th>ha</th><th>ma</th><th>ya</th><th>ra</th><th>wa</th>
+    </tr>
   </thead>
-  <tbody id="kanaTableBody"></tbody>
+  <tbody id="table-50on"></tbody>
+</table>
+
+<!-- 2. 요음 -->
+<h2>▶ 요음 (拗音)</h2>
+<table>
+  <thead>
+    <tr><th>카타카나</th><th>로마자</th></tr>
+  </thead>
+  <tbody id="table-youon"></tbody>
+</table>
+
+<!-- 3. 탁음 -->
+<h2>▶ 탁음 (濁音)</h2>
+<table>
+  <thead>
+    <tr><th>카타카나</th><th>로마자</th></tr>
+  </thead>
+  <tbody id="table-dakuon"></tbody>
+</table>
+
+<!-- 4. 반탁음 (半濁音) -->
+<h2>▶ 반탁음 (半濁音)</h2>
+<table>
+  <thead>
+    <tr><th>카타카나</th><th>로마자</th></tr>
+  </thead>
+  <tbody id="table-handakuon"></tbody>
+</table>
+
+<!-- 5. 외래어 확장 요음 -->
+<h2>▶ 외래어 확장 요음</h2>
+<table>
+  <thead>
+    <tr><th>카타카나</th><th>로마자</th></tr>
+  </thead>
+  <tbody id="table-gairaigo"></tbody>
 </table>
 
 <script>
-  const kanaMap = [
-    ["ア", "a"], ["イ", "i"], ["ウ", "u"], ["エ", "e"], ["オ", "o"],
-    ["カ", "ka"], ["キ", "ki"], ["ク", "ku"], ["ケ", "ke"], ["コ", "ko"],
-    ["サ", "sa"], ["シ", "shi"], ["ス", "su"], ["セ", "se"], ["ソ", "so"],
-    ["タ", "ta"], ["チ", "chi"], ["ツ", "tsu"], ["テ", "te"], ["ト", "to"],
-    ["ナ", "na"], ["ニ", "ni"], ["ヌ", "nu"], ["ネ", "ne"], ["ノ", "no"],
-    ["ハ", "ha"], ["ヒ", "hi"], ["フ", "fu"], ["ヘ", "he"], ["ホ", "ho"],
-    ["マ", "ma"], ["ミ", "mi"], ["ム", "mu"], ["メ", "me"], ["モ", "mo"],
-    ["ヤ", "ya"], ["ユ", "yu"], ["ヨ", "yo"],
-    ["ラ", "ra"], ["リ", "ri"], ["ル", "ru"], ["レ", "re"], ["ロ", "ro"],
-    ["ワ", "wa"], ["ヲ", "wo"], ["ン", "n"],
-    ["ガ", "ga"], ["ギ", "gi"], ["グ", "gu"], ["ゲ", "ge"], ["ゴ", "go"],
-    ["ザ", "za"], ["ジ", "ji"], ["ズ", "zu"], ["ゼ", "ze"], ["ゾ", "zo"],
-    ["ダ", "da"], ["ヂ", "ji"], ["ヅ", "zu"], ["デ", "de"], ["ド", "do"],
-    ["バ", "ba"], ["ビ", "bi"], ["ブ", "bu"], ["ベ", "be"], ["ボ", "bo"],
-    ["パ", "pa"], ["ピ", "pi"], ["プ", "pu"], ["ペ", "pe"], ["ポ", "po"],
+  // 1. 50음도
+  const table50on = [
+    [["ア","a"], ["カ","ka"], ["サ","sa"], ["タ","ta"], ["ナ","na"], ["ハ","ha"], ["マ","ma"], ["ヤ","ya"], ["ラ","ra"], ["ワ","wa"]],
+    [["イ","i"], ["キ","ki"], ["シ","shi"], ["チ","chi"], ["ニ","ni"], ["ヒ","hi"], ["ミ","mi"], ["",""], ["リ","ri"], ["",""]],
+    [["ウ","u"], ["ク","ku"], ["ス","su"], ["ツ","tsu"], ["ヌ","nu"], ["フ","fu"], ["ム","mu"], ["ユ","yu"], ["ル","ru"], ["",""]],
+    [["エ","e"], ["ケ","ke"], ["セ","se"], ["テ","te"], ["ネ","ne"], ["ヘ","he"], ["メ","me"], ["",""], ["レ","re"], ["",""]],
+    [["オ","o"], ["コ","ko"], ["ソ","so"], ["ト","to"], ["ノ","no"], ["ホ","ho"], ["モ","mo"], ["ヨ","yo"], ["ロ","ro"], ["ン","n"]]
+  ];
+
+  const tbody50 = document.getElementById('table-50on');
+  table50on.forEach(row => {
+    const trKana = document.createElement('tr');
+    const trRomaji = document.createElement('tr');
+    row.forEach(([kana, roma]) => {
+      trKana.innerHTML += `<td>${kana}</td>`;
+    });
+    row.forEach(([kana, roma]) => {
+      trRomaji.innerHTML += `<td>${roma}</td>`;
+    });
+    tbody50.appendChild(trKana);
+    tbody50.appendChild(trRomaji);
+  });
+
+  // 2. 요음
+  const youon = [
     ["キャ", "kya"], ["キュ", "kyu"], ["キョ", "kyo"],
     ["シャ", "sha"], ["シュ", "shu"], ["ショ", "sho"],
     ["チャ", "cha"], ["チュ", "chu"], ["チョ", "cho"],
@@ -61,15 +117,48 @@
     ["ヒャ", "hya"], ["ヒュ", "hyu"], ["ヒョ", "hyo"],
     ["ミャ", "mya"], ["ミュ", "myu"], ["ミョ", "myo"],
     ["リャ", "rya"], ["リュ", "ryu"], ["リョ", "ryo"],
-    ["ファ", "fa"], ["フィ", "fi"], ["フェ", "fe"], ["フォ", "fo"],
-    ["ティ", "ti"], ["トゥ", "tu"], ["シェ", "she"], ["チェ", "che"], ["ジェ", "je"]
+    ["ギャ", "gya"], ["ギュ", "gyu"], ["ギョ", "gyo"],
+    ["ジャ", "ja"], ["ジュ", "ju"], ["ジョ", "jo"],
+    ["ビャ", "bya"], ["ビュ", "byu"], ["ビョ", "byo"],
+    ["ピャ", "pya"], ["ピュ", "pyu"], ["ピョ", "pyo"]
   ];
+  const tbodyYouon = document.getElementById('table-youon');
+  youon.forEach(([kana, roma]) => {
+    tbodyYouon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+  });
 
-  const tbody = document.getElementById('kanaTableBody');
-  kanaMap.forEach(([kana, romaji]) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${kana}</td><td>${romaji}</td>`;
-    tbody.appendChild(row);
+  // 3. 탁음
+  const dakuon = [
+    ["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"],
+    ["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"],
+    ["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"],
+    ["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]
+  ];
+  const tbodyDakuon = document.getElementById('table-dakuon');
+  dakuon.forEach(([kana, roma]) => {
+    tbodyDakuon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+  });
+
+  // 4. 반탁음
+  const handakuon = [
+    ["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]
+  ];
+  const tbodyHandakuon = document.getElementById('table-handakuon');
+  handakuon.forEach(([kana, roma]) => {
+    tbodyHandakuon.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
+  });
+
+  // 5. 외래어 확장 요음
+  const gairaigo = [
+    ["ファ","fa"], ["フィ","fi"], ["フェ","fe"], ["フォ","fo"],
+    ["ティ","ti"], ["ディ","di"], ["ドゥ","du"],
+    ["ウィ","wi"], ["ウェ","we"], ["ウォ","wo"],
+    ["ヴァ","va"], ["ヴィ","vi"], ["ヴ","vu"], ["ヴェ","ve"], ["ヴォ","vo"],
+    ["チェ","che"], ["シェ","she"], ["ジェ","je"]
+  ];
+  const tbodyGairaigo = document.getElementById('table-gairaigo');
+  gairaigo.forEach(([kana, roma]) => {
+    tbodyGairaigo.innerHTML += `<tr><td>${kana}</td><td>${roma}</td></tr>`;
   });
 </script>
 
