@@ -13,38 +13,21 @@
       flex-direction: column;
       align-items: center;
     }
-    h1 {
-      font-size: 28px;
-      color: #1a73e8;
-    }
+    h1 { font-size: 28px; color: #1a73e8; }
     textarea {
-      width: 80%;
-      height: 120px;
-      font-size: 20px;
-      margin: 10px 0;
-      padding: 10px;
+      width: 80%; height: 120px; font-size: 20px;
+      margin: 10px 0; padding: 10px;
     }
     button {
-      font-size: 18px;
-      padding: 10px 20px;
-      margin: 10px 0;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      font-size: 18px; padding: 10px 20px; margin: 10px 0;
+      background-color: #1a73e8; color: white;
+      border: none; border-radius: 5px; cursor: pointer;
     }
     #output {
-      margin-top: 20px;
-      font-size: 22px;
-      font-weight: bold;
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #f5f5f5;
-      padding: 15px;
-      width: 80%;
-      border-radius: 5px;
-      min-height: 50px;
+      margin-top: 20px; font-size: 22px; font-weight: bold;
+      white-space: pre-wrap; word-break: break-word;
+      background: #f5f5f5; padding: 15px; width: 80%;
+      border-radius: 5px; min-height: 50px;
     }
   </style>
 </head>
@@ -56,7 +39,7 @@
 
   <script>
     /* ================================
-       カタカナ → 한글 기본 매핑
+       카타카나 → 한글 변환 (기본 매핑)
        ================================ */
     const kanaMap = {
       "ア":"아","イ":"이","ウ":"우","エ":"에","オ":"오",
@@ -74,6 +57,8 @@
       "ヤ":"야","ユ":"유","ヨ":"요",
       "ラ":"라","リ":"리","ル":"루","レ":"레","ロ":"로",
       "ワ":"와","ヲ":"오","ン":"ㄴ",
+
+      // 요음
       "キャ":"캬","キュ":"큐","キョ":"쿄",
       "シャ":"샤","シュ":"슈","ショ":"쇼",
       "チャ":"챠","チュ":"추","チョ":"초",
@@ -84,47 +69,14 @@
       "ギャ":"갸","ギュ":"규","ギョ":"교",
       "ジャ":"쟈","ジュ":"쥬","ジョ":"조",
       "ビャ":"뱌","ビュ":"뷰","ビョ":"뵤",
-      "ピャ":"퍄","ピュ":"퓨","ピョ":"표"
+      "ピャ":"퍄","ピュ":"퓨","ピョ":"표",
+
+      // 외래어 확장
+      "ヴァ":"바","ヴィ":"비","ヴェ":"베","ヴォ":"보","ヴ":"부",
+      "ティ":"티","ディ":"디","チェ":"체","シェ":"셰","ジェ":"제",
+      "ファ":"파","フィ":"피","フェ":"페","フォ":"포"
     };
 
-    /* ================================
-       외래어 + ッ + ン 규칙 처리
-       ================================ */
-    function applyKoreanPhonology(text) {
-      return text
-        // --- 외래어 확장: ヴ 계열 ---
-        .replace(/ヴァ/g, "バ") // 바
-        .replace(/ヴィ/g, "ビ") // 비
-        .replace(/ヴェ/g, "ベ") // 베
-        .replace(/ヴォ/g, "ボ") // 보
-        .replace(/ヴ/g, "ブ")   // 부
-
-        // --- 외래어 확장: ティ, ディ, etc ---
-        .replace(/ティ/g, "チ") // 티
-        .replace(/ディ/g, "ヂ") // 디
-        .replace(/チェ/g, "チ") // 체
-        .replace(/シェ/g, "シ") // 셰
-        .replace(/ジェ/g, "ジ") // 제
-        .replace(/ファ/g, "フ") // 파
-        .replace(/フィ/g, "フ") // 피
-        .replace(/フェ/g, "フ") // 페
-        .replace(/フォ/g, "フ") // 포
-
-        // --- 促音(ッ) 처리 (받침) ---
-        .replace(/ッ([カキクケコ])/g, "ㄱ$1")
-        .replace(/ッ([サシスセソ])/g, "ㅅ$1")
-        .replace(/ッ([タチツテト])/g, "ㄷ$1")
-        .replace(/ッ([パピプペポ])/g, "ㅂ$1")
-        .replace(/ッ/g, "ㅅ")
-
-        // --- 撥音(ン) 처리 ---
-        .replace(/ン([カ-コサ-ソタ-トナ-ノハ-ホマ-モヤユヨラ-ロワヲ])/g, "ㄴ$1")
-        .replace(/ン$/g, "ㄴ");
-    }
-
-    /* ================================
-       カタカナ → 한글 변환 실행
-       ================================ */
     function kanaToHangul(input) {
       let result = "";
       let i = 0;
@@ -142,16 +94,25 @@
       return result;
     }
 
+    /* ================================
+       한국어 음운 규칙 적용
+       ================================ */
+    function applyKoreanPhonology(text) {
+      return text
+        // ッ → 앞 음절 받침에 ㅅ
+        .replace(/([가-힣])ッ/g, (m, prev) => prev + "ㅅ")
+        // ン → 앞 음절 받침에 ㄴ
+        .replace(/([가-힣])ン/g, (m, prev) => prev + "ㄴ");
+    }
+
+    /* ================================
+       변환 실행
+       ================================ */
     function convert() {
       const input = document.getElementById("input").value.trim();
-
-      // 1. 음운 규칙 적용 (외래어, ッ, ン 변환)
-      let preHandled = applyKoreanPhonology(input);
-
-      // 2. 카타카나 → 한글 매핑
-      let output = kanaToHangul(preHandled);
-
-      document.getElementById("output").innerText = output;
+      let raw = kanaToHangul(input);       // 카타카나 → 한글
+      let fixed = applyKoreanPhonology(raw); // 받침 규칙 적용
+      document.getElementById("output").innerText = fixed;
     }
   </script>
 </body>
