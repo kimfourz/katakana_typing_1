@@ -120,24 +120,33 @@
     /* ================================
        한국어 음운 규칙 적용
        ================================ */
-    function applyKoreanPhonology(text) {
-      return text
-        .replace(/メㄴ/g, "멘")
-        .replace(/ネㄴ/g, "넨")
-        .replace(/テㄴ/g, "텐")
-        // ㄴ + ㄱ → ㅇ
-        .replace(/ㄴㄱ/g, "ㅇㄱ")
-        // ㄴ + ㅂ → ㅁ
-        .replace(/ㄴㅂ/g, "ㅁㅂ")
-        // ㄴ + ㅍ → ㅁ
-        .replace(/ㄴㅍ/g, "ㅁㅍ")
-        // ㄴ + ㄷ → ㄴㄴ
-        .replace(/ㄴㄷ/g, "ㄴㄴ")
-        // 받침 ㄱ + ㄷ → ㄳ (굿도 = 굿도)
-        .replace(/ㄱ도/g, "굿도")
-        // ㄴ + 모음 시작 → 받침 결합
-        .replace(/([가-힣])ㄴ([아-잏])/g, (m, prev, next) => prev + "ㄴ" + next);
-    }
+   function applyKoreanPhonology(text) {
+  return text
+    // 기존 규칙들 유지
+    .replace(/メㄴ/g, "멘")
+    .replace(/ネㄴ/g, "넨")
+    .replace(/テㄴ/g, "텐")
+
+    // 받침화 규칙 보강
+    .replace(/구ㄱ/g, "국")
+    .replace(/구ㄷ/g, "굿")
+    .replace(/부ㅂ/g, "붑")
+    .replace(/부ㄷ/g, "붓")
+    .replace(/도ㄷ/g, "돋")
+    .replace(/가ㄷ/g, "갇")
+
+    // ㄴ 계열
+    .replace(/ㄴㄱ/g, "ㅇ")
+    .replace(/ㄴㅂ/g, "ㅁ")
+    .replace(/ㄴㅍ/g, "ㅁ")
+    .replace(/ㄴㄷ/g, "ㄴㄴ")
+
+    // ㄱ받침 + ㄷ → ㄳ(굿도 케이스)
+    .replace(/굿도/g, "굿도")
+
+    // 받침 + 모음 시작 → 붙이기
+    .replace(/([가-힣])ㄴ([아-잏])/g, (m, prev, next) => prev + "ㄴ" + next);
+}
 
     /* ================================
        변환 실행
