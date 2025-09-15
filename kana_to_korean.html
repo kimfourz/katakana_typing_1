@@ -50,7 +50,17 @@
   <div id="output"></div>
 
   <script>
-    // 기본 매핑 테이블 (일부만, 필요하면 확장 가능)
+    // 외래어 확장 세트
+    const extendedTable = {
+      "ティ": "티", "ディ": "디", "トゥ": "투", "ドゥ": "두",
+      "チェ": "체", "シェ": "셰", "ジェ": "제",
+      "ファ": "파", "フィ": "피", "フェ": "페", "フォ": "포",
+      "ウィ": "위", "ウェ": "웨", "ウォ": "워",
+      "ヴァ": "바", "ヴィ": "비", "ヴェ": "베", "ヴォ": "보",
+      "ヴ": "부"
+    };
+
+    // 기본 매핑
     const table = {
       "ア":"아","イ":"이","ウ":"우","エ":"에","オ":"오",
       "カ":"카","キ":"키","ク":"쿠","ケ":"케","コ":"코",
@@ -66,32 +76,38 @@
       "マ":"마","ミ":"미","ム":"무","メ":"메","モ":"모",
       "ヤ":"야","ユ":"유","ヨ":"요",
       "ラ":"라","リ":"리","ル":"루","レ":"레","ロ":"로",
-      "ワ":"와","ヲ":"오","ン":"ㄴ" // ン은 따로 처리
+      "ワ":"와","ヲ":"오","ン":"ㄴ" // ン 따로 처리
     };
 
     function kanaToHangul(input) {
       let result = "";
       for (let i = 0; i < input.length; i++) {
         let char = input[i];
+        let next = input[i + 1] || "";
 
-        // 1) 促音 (ッ) 처리
-        if (char === "ッ") {
-          let next = input[i + 1];
-          if (next) {
-            if ("カキクケコガギグゲゴ".includes(next)) result += "ㄲ";
-            else if ("サシスセソザジズゼゾ".includes(next)) result += "ㅆ";
-            else if ("タチツテトダヂヅデド".includes(next)) result += "ㄸ";
-            else if ("パピプペポバビブベボ".includes(next)) result += "ㅃ";
-          }
+        // 1) 확장 음 (2글자 조합)
+        const twoChars = char + next;
+        if (extendedTable[twoChars]) {
+          result += extendedTable[twoChars];
+          i++; // 다음 글자 스킵
           continue;
         }
 
-        // 2) ン 처리
+        // 2) 작은 ッ 처리 (促音)
+        if (char === "ッ") {
+          // 단순히 받침으로 ㄱ, ㅅ, ㅂ 추가
+          if ("カキクケコガギグゲゴ".includes(next)) result += "ㄱ";
+          else if ("サシスセソザジズゼゾ".includes(next)) result += "ㅅ";
+          else if ("タチツテトダヂヅデド".includes(next)) result += "ㅅ"; // 한국어 표기법에서는 "ㅅ" 계열
+          else if ("パピプペポバビブベボ".includes(next)) result += "ㅂ";
+          continue;
+        }
+
+        // 3) ン 처리
         if (char === "ン") {
-          let next = input[i + 1];
           if (!next) {
             result += "ㅇ"; // 단어 끝 → 받침 ㅇ
-          } else if ("マミムメモ".includes(next) || "バビブベボ".includes(next)) {
+          } else if ("マミムメモバビブベボ".includes(next)) {
             result += "ㅁ";
           } else if ("カキクケコガギグゲゴ".includes(next)) {
             result += "ㅇ";
@@ -101,7 +117,7 @@
           continue;
         }
 
-        // 3) 일반 매핑
+        // 4) 일반 매핑
         result += table[char] || char;
       }
       return result;
