@@ -121,7 +121,7 @@
        한국어 음운 규칙 적용
        ================================ */
    function applyKoreanPhonology(text) {
-return text{
+return text
   // --- 促音(ッ) → ㅅ 받침 ---
   .replace(/ッ([カ-モヤユヨラ-ロワヲン])/g, (m, next) => "ㅅ" + next)
   .replace(/ッ/g, "ㅅ") // 단독 ッ 처리
@@ -149,7 +149,6 @@ return text{
   .replace(/フィ/g, "피")
   .replace(/フェ/g, "페")
   .replace(/フォ/g, "포");
-
    }
 
     /* ================================
