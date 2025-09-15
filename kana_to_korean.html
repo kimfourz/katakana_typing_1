@@ -9,126 +9,126 @@
       background-color: #ffffff;
       margin: 0;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
     h1 {
-      font-size: 28px;
       color: #1a73e8;
     }
     textarea {
-      width: 80%;
-      height: 100px;
-      font-size: 20px;
-      margin: 10px 0;
+      width: 100%;
+      height: 120px;
+      font-size: 18px;
+      padding: 10px;
+      margin-top: 10px;
     }
     button {
       font-size: 18px;
       padding: 10px 20px;
+      margin-top: 10px;
       background-color: #1a73e8;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin: 10px 0;
     }
     #output {
       margin-top: 20px;
-      font-size: 22px;
-      font-weight: bold;
-      color: #333;
+      font-size: 20px;
+      padding: 10px;
+      background-color: #f1f3f4;
+      min-height: 60px;
       white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
 
-  <h1>カタカナ → 한국어 변환기</h1>
-  <textarea id="inputText" placeholder="여기에 카타카나를 입력하세요"></textarea>
-  <button onclick="convert()">변환하기</button>
-  <div id="output"></div>
+<h1>カタカナ → 한국어 변환기</h1>
+<textarea id="input" placeholder="カタカナ 텍스트 입력"></textarea><br>
+<button onclick="convert()">변환하기</button>
 
-  <script>
-    // 외래어 확장 세트
-    const extendedTable = {
-      "ティ": "티", "ディ": "디", "トゥ": "투", "ドゥ": "두",
-      "チェ": "체", "シェ": "셰", "ジェ": "제",
-      "ファ": "파", "フィ": "피", "フェ": "페", "フォ": "포",
-      "ウィ": "위", "ウェ": "웨", "ウォ": "워",
-      "ヴァ": "바", "ヴィ": "비", "ヴェ": "베", "ヴォ": "보",
-      "ヴ": "부"
-    };
+<div id="output"></div>
 
-    // 기본 매핑
-    const table = {
-      "ア":"아","イ":"이","ウ":"우","エ":"에","オ":"오",
-      "カ":"카","キ":"키","ク":"쿠","ケ":"케","コ":"코",
-      "ガ":"가","ギ":"기","グ":"구","ゲ":"게","ゴ":"고",
-      "サ":"사","シ":"시","ス":"스","セ":"세","ソ":"소",
-      "ザ":"자","ジ":"지","ズ":"즈","ゼ":"제","ゾ":"조",
-      "タ":"타","チ":"치","ツ":"츠","テ":"테","ト":"토",
-      "ダ":"다","ヂ":"지","ヅ":"즈","デ":"데","ド":"도",
-      "ナ":"나","ニ":"니","ヌ":"누","ネ":"네","ノ":"노",
-      "ハ":"하","ヒ":"히","フ":"후","ヘ":"헤","ホ":"호",
-      "バ":"바","ビ":"비","ブ":"부","ベ":"베","ボ":"보",
-      "パ":"파","ピ":"피","プ":"푸","ペ":"페","ポ":"포",
-      "マ":"마","ミ":"미","ム":"무","メ":"메","モ":"모",
-      "ヤ":"야","ユ":"유","ヨ":"요",
-      "ラ":"라","リ":"리","ル":"루","レ":"레","ロ":"로",
-      "ワ":"와","ヲ":"오","ン":"ㄴ" // ン 따로 처리
-    };
+<script>
+  // Katakana to Hangul mapping (간단 샘플, 필요시 확장 가능)
+  const kanaMap = {
+    "ア":"아","イ":"이","ウ":"우","エ":"에","オ":"오",
+    "カ":"카","キ":"키","ク":"쿠","ケ":"케","コ":"코",
+    "サ":"사","シ":"시","ス":"스","セ":"세","ソ":"소",
+    "タ":"타","チ":"치","ツ":"츠","テ":"테","ト":"토",
+    "ナ":"나","ニ":"니","ヌ":"누","ネ":"네","ノ":"노",
+    "ハ":"하","ヒ":"히","フ":"후","ヘ":"헤","ホ":"호",
+    "マ":"마","ミ":"미","ム":"무","メ":"메","モ":"모",
+    "ヤ":"야","ユ":"유","ヨ":"요",
+    "ラ":"라","リ":"리","ル":"루","レ":"레","ロ":"로",
+    "ワ":"와","ヲ":"오","ン":"ㄴ",
 
-    function kanaToHangul(input) {
-      let result = "";
-      for (let i = 0; i < input.length; i++) {
-        let char = input[i];
-        let next = input[i + 1] || "";
+    // 요음
+    "キャ":"캬","キュ":"큐","キョ":"쿄",
+    "シャ":"샤","シュ":"슈","ショ":"쇼",
+    "チャ":"챠","チュ":"추","チョ":"초",
+    "ニャ":"냐","ニュ":"뉴","ニョ":"뇨",
+    "ヒャ":"햐","ヒュ":"휴","ヒョ":"효",
+    "ミャ":"먀","ミュ":"뮤","ミョ":"묘",
+    "リャ":"랴","リュ":"류","リョ":"료",
 
-        // 1) 확장 음 (2글자 조합)
-        const twoChars = char + next;
-        if (extendedTable[twoChars]) {
-          result += extendedTable[twoChars];
-          i++; // 다음 글자 스킵
-          continue;
-        }
+    // 탁음
+    "ガ":"가","ギ":"기","グ":"구","ゲ":"게","ゴ":"고",
+    "ザ":"자","ジ":"지","ズ":"즈","ゼ":"제","ゾ":"조",
+    "ダ":"다","ヂ":"지","ヅ":"즈","デ":"데","ド":"도",
+    "バ":"바","ビ":"비","ブ":"부","ベ":"베","ボ":"보",
 
-        // 2) 작은 ッ 처리 (促音)
-        if (char === "ッ") {
-          // 단순히 받침으로 ㄱ, ㅅ, ㅂ 추가
-          if ("カキクケコガギグゲゴ".includes(next)) result += "ㄱ";
-          else if ("サシスセソザジズゼゾ".includes(next)) result += "ㅅ";
-          else if ("タチツテトダヂヅデド".includes(next)) result += "ㅅ"; // 한국어 표기법에서는 "ㅅ" 계열
-          else if ("パピプペポバビブベボ".includes(next)) result += "ㅂ";
-          continue;
-        }
+    // 반탁음
+    "パ":"파","ピ":"피","プ":"푸","ペ":"페","ポ":"포",
 
-        // 3) ン 처리
-        if (char === "ン") {
-          if (!next) {
-            result += "ㅇ"; // 단어 끝 → 받침 ㅇ
-          } else if ("マミムメモバビブベボ".includes(next)) {
-            result += "ㅁ";
-          } else if ("カキクケコガギグゲゴ".includes(next)) {
-            result += "ㅇ";
-          } else {
-            result += "ㄴ";
-          }
-          continue;
-        }
+    // 확장
+    "ヴァ":"바","ヴィ":"비","ヴ":"부","ヴェ":"베","ヴォ":"보",
+    "ー":"ー" // 장음 (후처리에서 변환)
+  };
 
-        // 4) 일반 매핑
-        result += table[char] || char;
-      }
-      return result;
-    }
+  // 1단계: 카타카나 → 기본 한글 치환
+  function kanaToHangul(input) {
+    let result = input;
+    const keys = Object.keys(kanaMap).sort((a,b)=>b.length-a.length);
+    keys.forEach(k => {
+      result = result.split(k).join(kanaMap[k]);
+    });
+    return result;
+  }
 
-    function convert() {
-      const input = document.getElementById("inputText").value.trim();
-      const output = kanaToHangul(input);
-      document.getElementById("output").innerText = output;
-    }
-  </script>
+  // 2단계: 한국어 음운 규칙 적용
+  function applyKoreanPhonology(text) {
+    return text
+      // 장음 기호 ー : 앞 모음 늘리기
+      .replace(/([아-힣])ー/g, "$1우")
+
+      // 메ㄴ, 네ㄴ → 멘, 넨
+      .replace(/메ㄴ/g, "멘")
+      .replace(/ネㄴ/g, "넨")
+      .replace(/テㄴ/g, "텐")
+
+      // 받침 ㄴ + ㄱ → ㅇ
+      .replace(/ㄴㄱ/g, "ㅇㄱ")
+      // 받침 ㄴ + ㅂ/ㅍ → ㅁ
+      .replace(/ㄴㅂ/g, "ㅁㅂ")
+      .replace(/ㄴㅍ/g, "ㅁㅍ")
+      // 받침 ㄴ + ㄷ/ㅈ/ㅊ → ㄴㄴ
+      .replace(/ㄴ[ㄷㅈㅊ]/g, "ㄴㄴ")
+
+      // 기본 받침 정리
+      .replace(/ㄴ$/g, "ㄴ")
+      .replace(/ㄱ$/g, "ㄱ")
+      .replace(/ㅂ$/g, "ㅂ")
+      .replace(/ㅁ$/g, "ㅁ");
+  }
+
+  // 변환 실행
+  function convert() {
+    const input = document.getElementById("input").value.trim();
+    let raw = kanaToHangul(input);         // 1단계 변환
+    let fixed = applyKoreanPhonology(raw); // 2단계 후처리
+    document.getElementById("output").innerText = fixed;
+  }
+</script>
 
 </body>
 </html>
