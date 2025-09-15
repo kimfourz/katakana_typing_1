@@ -122,65 +122,81 @@
        ================================ */
    function applyKoreanPhonology(text) {
 return text
-    // 기존 규칙들 유지
-    .replace(/メㄴ/g, "멘")
-    .replace(/ネㄴ/g, "넨")
-    .replace(/テㄴ/g, "텐")
+  // --- 기존 규칙 유지 ---
+  .replace(/メㄴ/g, "멘")
+  .replace(/ネㄴ/g, "넨")
+  .replace(/テㄴ/g, "텐")
 
-    // 받침화 규칙 보강
-    .replace(/구ㄱ/g, "국")
-    .replace(/구ㄷ/g, "굿")
-    .replace(/부ㅂ/g, "붑")
-    .replace(/부ㄷ/g, "붓")
-    .replace(/도ㄷ/g, "돋")
-    .replace(/가ㄷ/g, "갇")
+  // --- 받침화 규칙 보강 ---
+  .replace(/구ㄱ/g, "국")
+  .replace(/구ㄷ/g, "굿")
+  .replace(/부ㅂ/g, "붑")
+  .replace(/부ㄷ/g, "붓")
+  .replace(/도ㄷ/g, "돋")
+  .replace(/가ㄷ/g, "갇")
 
-    // ㄴ 계열
-    .replace(/ㄴㄱ/g, "ㅇ")
-    .replace(/ㄴㅂ/g, "ㅁ")
-    .replace(/ㄴㅍ/g, "ㅁ")
-    .replace(/ㄴㄷ/g, "ㄴㄴ")
+  // ㄴ 계열 동화
+  .replace(/ㄴㄱ/g, "ㅇ")
+  .replace(/ㄴㅂ/g, "ㅁ")
+  .replace(/ㄴㅍ/g, "ㅁ")
+  .replace(/ㄴㄷ/g, "ㄴㄴ")
 
-    // --- 促音(ッ) 관련 받침화 규칙 ---
-    // ㅅ 계열 (타행 + サ行)
-    .replace(/세ㄷ토/g, "셋토")
-    .replace(/아세ㄷ토/g, "아셋토")
-    .replace(/라ㄷ토/g, "랏토")
-    .replace(/푸라ㄷ토/g, "푸랏토")
-    .replace(/도ㄷ테/g, "돗테")
-    .replace(/사ㄷ소/g, "삿소")
+  // --- 促音(ッ) 관련 받침화 규칙 ---
+  // ㅅ 계열 (サ행 + タ행)
+  .replace(/세ㄷ토/g, "셋토")
+  .replace(/아세ㄷ토/g, "아셋토")
+  .replace(/라ㄷ토/g, "랏토")
+  .replace(/푸라ㄷ토/g, "푸랏토")
+  .replace(/도ㄷ테/g, "돗테")
+  .replace(/사ㄷ소/g, "삿소")
 
-        // ント → 멘토 / 넌토 / … 형태 변환
-    .replace(/メㄴト/g, "멘토")
-    .replace(/ネㄴト/g, "넨토")
-    .replace(/ンㄴト/g, "ㄴ토")  // 일반 규칙 보정
+  // ㄱ 계열 (カ행)
+  .replace(/가ㄱ카/g, "각카")
+  .replace(/마ㄱ코/g, "막코")
+  .replace(/쿠ㄱ코/g, "쿡코")
 
+  // ㅂ 계열 (パ행)
+  .replace(/부ㅂ포/g, "붑포")
+  .replace(/부ㄷ포/g, "붓포")
+  .replace(/아ㅂ파/g, "압파")
 
-    // ㄱ 계열 (カ行)
-    .replace(/가ㄱ카/g, "각카")
-    .replace(/마ㄱ코/g, "막코")
-    .replace(/쿠ㄱ코/g, "쿡코")
+  // ㄷ 계열 (タ행)
+  .replace(/부ㄷ타/g, "붓타")
+  .replace(/마ㄷ타/g, "맛타")
 
-    // ㅂ 계열 (パ行)
-    .replace(/부ㅂ포/g, "붑포")
-    .replace(/부ㄷ포/g, "붓포")
-    .replace(/아ㅂ파/g, "압파")
+  // --- 일반 받침화 ---
+  .replace(/구ㄷ/g, "굿")
+  .replace(/부ㄷ/g, "붓")
+  .replace(/도ㄷ/g, "돋")
 
-    // ㄷ 계열 (タ行)
-    .replace(/부ㄷ타/g, "붓타")
-    .replace(/마ㄷ타/g, "맛타")
+  // ㄱ받침 + ㄷ → ㄳ (굿도 케이스)
+  .replace(/굿도/g, "굿도")
 
-    // --- 일반 받침화 ---
-    .replace(/구ㄷ/g, "굿")
-    .replace(/부ㄷ/g, "붓")
-    .replace(/도ㄷ/g, "돋")
+  // --- ント 규칙 (예: マネジメント → 마네지멘토) ---
+  .replace(/メㄴト/g, "メント")
+  .replace(/네ㄴ토/g, "넨토")
+  .replace(/테ㄴ토/g, "텐토")
 
-    // ㄱ받침 + ㄷ → ㄳ (굿도 케이스)
-    .replace(/굿도/g, "굿도")
+  // --- ンド 규칙 (예: ブランド → 브란도) ---
+  .replace(/란ㄷ도/g, "란도")   // 브랜드 → 브란도
+  .replace(/멘ㄷ토/g, "멘토")   // マネジメント → 마네지멘토
 
-    // 받침 + 모음 시작 → 붙이기
-    .replace(/([가-힣])ㄴ([아-잏])/g, (m, prev, next) => prev + "ㄴ" + next);
-}
+  // --- 반탁음 요음 + ッ 규칙 ---
+  // ピャ/ピュ/ピョ + ッ
+  .replace(/ピャㄷ/g, "핍")  // ピャッ → 핍
+  .replace(/ピュㄷ/g, "퓹")  // ピュッ → 퓹
+  .replace(/ピョㄷ/g, "표ㅂ") // ピョッ → 표ㅂ (케이스 따라 조정 가능)
+
+  // パ/ピ/プ/ペ/ポ + ッ
+  .replace(/パㄷ/g, "팟")
+  .replace(/ピㄷ/g, "핏")
+  .replace(/プㄷ/g, "풋")
+  .replace(/ペㄷ/g, "펫")
+  .replace(/ポㄷ/g, "폿")
+
+  // --- 받침 + 모음 시작 → 자연스럽게 이어지도록 ---
+  .replace(/([가-힣])ㄴ([아-잏])/g, (m, prev, next) => prev + "ㄴ" + next);
+
 
     /* ================================
        변환 실행
