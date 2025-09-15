@@ -150,6 +150,12 @@ return text
     .replace(/도ㄷ테/g, "돗테")
     .replace(/사ㄷ소/g, "삿소")
 
+        // ント → 멘토 / 넌토 / … 형태 변환
+    .replace(/メㄴト/g, "멘토")
+    .replace(/ネㄴト/g, "넨토")
+    .replace(/ンㄴト/g, "ㄴ토")  // 일반 규칙 보정
+
+
     // ㄱ 계열 (カ行)
     .replace(/가ㄱ카/g, "각카")
     .replace(/마ㄱ코/g, "막코")
