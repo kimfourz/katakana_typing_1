@@ -169,6 +169,12 @@ return text
   .replace(/부ㄷ/g, "붓")
   .replace(/도ㄷ/g, "돋")
 
+  .replace(/ヴァ/g, "바")
+  .replace(/ヴィ/g, "비")
+  .replace(/ヴェ/g, "베")
+  .replace(/ヴォ/g, "보")
+  .replace(/ヴ/g, "부") 
+
   // ㄱ받침 + ㄷ → ㄳ (굿도 케이스)
   .replace(/굿도/g, "굿도")
 
