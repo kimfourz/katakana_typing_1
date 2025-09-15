@@ -56,20 +56,7 @@
 
   <script>
     /* ================================
-       ッ(促音) 처리
-       ================================ */
-    function handleSokuon(input) {
-      return input.replace(/ッ([カ-モサ-モタ-ドバ-ポ])/g, (m, next) => {
-        if (/カ|キ|ク|ケ|コ|ガ|ギ|グ|ゲ|ゴ/.test(next)) return "ㄱ" + next;
-        if (/サ|シ|ス|セ|ソ|ザ|ジ|ズ|ゼ|ゾ/.test(next)) return "ㅅ" + next;
-        if (/タ|チ|ツ|テ|ト|ダ|ヂ|ヅ|デ|ド/.test(next)) return "ㄷ" + next;
-        if (/パ|ピ|プ|ペ|ポ|バ|ビ|ブ|ベ|ボ/.test(next)) return "ㅂ" + next;
-        return next;
-      });
-    }
-
-    /* ================================
-       카타카나 → 한글 변환 (기본 매핑)
+       カタカナ → 한글 기본 매핑
        ================================ */
     const kanaMap = {
       "ア":"아","イ":"이","ウ":"우","エ":"에","オ":"오",
@@ -100,6 +87,44 @@
       "ピャ":"퍄","ピュ":"퓨","ピョ":"표"
     };
 
+    /* ================================
+       외래어 + ッ + ン 규칙 처리
+       ================================ */
+    function applyKoreanPhonology(text) {
+      return text
+        // --- 외래어 확장: ヴ 계열 ---
+        .replace(/ヴァ/g, "バ") // 바
+        .replace(/ヴィ/g, "ビ") // 비
+        .replace(/ヴェ/g, "ベ") // 베
+        .replace(/ヴォ/g, "ボ") // 보
+        .replace(/ヴ/g, "ブ")   // 부
+
+        // --- 외래어 확장: ティ, ディ, etc ---
+        .replace(/ティ/g, "チ") // 티
+        .replace(/ディ/g, "ヂ") // 디
+        .replace(/チェ/g, "チ") // 체
+        .replace(/シェ/g, "シ") // 셰
+        .replace(/ジェ/g, "ジ") // 제
+        .replace(/ファ/g, "フ") // 파
+        .replace(/フィ/g, "フ") // 피
+        .replace(/フェ/g, "フ") // 페
+        .replace(/フォ/g, "フ") // 포
+
+        // --- 促音(ッ) 처리 (받침) ---
+        .replace(/ッ([カキクケコ])/g, "ㄱ$1")
+        .replace(/ッ([サシスセソ])/g, "ㅅ$1")
+        .replace(/ッ([タチツテト])/g, "ㄷ$1")
+        .replace(/ッ([パピプペポ])/g, "ㅂ$1")
+        .replace(/ッ/g, "ㅅ")
+
+        // --- 撥音(ン) 처리 ---
+        .replace(/ン([カ-コサ-ソタ-トナ-ノハ-ホマ-モヤユヨラ-ロワヲ])/g, "ㄴ$1")
+        .replace(/ン$/g, "ㄴ");
+    }
+
+    /* ================================
+       カタカナ → 한글 변환 실행
+       ================================ */
     function kanaToHangul(input) {
       let result = "";
       let i = 0;
@@ -117,51 +142,16 @@
       return result;
     }
 
-    /* ================================
-       한국어 음운 규칙 적용
-       ================================ */
-function applyKoreanPhonology(text) {
-  return text.replace(/ッ([カ-モヤユヨラ-ロワヲン])/g, (m, next) => "ㅅ" + next)
-    .replace(/ッ/g, "ㅅ") // 단독 ッ 처리
-
-    // --- 撥音(ン) → ㄴ 받침 ---
-    .replace(/ン([カ-モヤユヨラ-ロワヲ])/g, (m, next) => "ㄴ" + next)
-    .replace(/ン$/g, "ㄴ") // 단어 끝의 ン
-
-    // --- 외래어 확장 ヴ 계열 ---
-    .replace(/ヴァ/g, "바")
-    .replace(/ヴィ/g, "비")
-    .replace(/ヴェ/g, "베")
-    .replace(/ヴォ/g, "보")
-    .replace(/ヴ/g, "부")
-
-    // --- 외래어 확장: ティ 계열 ---
-    .replace(/ティ/g, "티")
-    .replace(/ディ/g, "디")
-    .replace(/チェ/g, "체")
-    .replace(/シェ/g, "셰")
-    .replace(/ジェ/g, "제")
-
-    // --- 외래어 확장: フ 계열 ---
-    .replace(/ファ/g, "파")
-    .replace(/フィ/g, "피")
-    .replace(/フェ/g, "페")
-    .replace(/フォ/g, "포");
-}
-
-
-
-    /* ================================
-       변환 실행
-       ================================ */
     function convert() {
       const input = document.getElementById("input").value.trim();
 
-      let handled = handleSokuon(input);     // ッ 처리
-      let raw = kanaToHangul(handled);       // 카타카나 → 한글
-      let fixed = applyKoreanPhonology(raw); // 음운 규칙 적용
+      // 1. 음운 규칙 적용 (외래어, ッ, ン 변환)
+      let preHandled = applyKoreanPhonology(input);
 
-      document.getElementById("output").innerText = fixed;
+      // 2. 카타카나 → 한글 매핑
+      let output = kanaToHangul(preHandled);
+
+      document.getElementById("output").innerText = output;
     }
   </script>
 </body>
